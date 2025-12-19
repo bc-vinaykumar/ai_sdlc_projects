@@ -1,0 +1,38 @@
+
+sequenceDiagram
+    participant B as Browser
+    participant WA as WebApp
+    participant TL as TodoList
+    participant TI as TodoItem
+
+    B->>WA: GET / (initial load)
+    WA->>TL: __init__()
+    WA->>B: Render index.html with TodoList data
+
+    B->>WA: POST /add_task (add new task)
+    WA->>TL: add_item(text)
+    TL->>TI: __init__(text)
+    TL->>B: Return updated TodoList data (JSON)
+    B->>B: Update UI
+
+    B->>WA: POST /delete_task/id (delete task)
+    WA->>TL: delete_item(id)
+    TL->>B: Return updated TodoList data (JSON)
+    B->>B: Update UI
+
+    B->>WA: POST /complete_task/id (complete task)
+    WA->>TL: complete_item(id)
+    TL->>TI: set_completed(true)
+    TL->>B: Return updated TodoList data (JSON)
+    B->>B: Update UI
+
+    B->>WA: GET /get_tasks (get all tasks)
+    WA->>TL: get_all_items()
+    TL->>TI: to_dict() (for each item)
+    WA->>B: Return TodoList data (JSON)
+    B->>B: Update UI
+
+    loop Persisted Data
+        B->>B: localStorage.setItem(TodoList data)
+        B->>B: localStorage.getItem(TodoList data)
+    end

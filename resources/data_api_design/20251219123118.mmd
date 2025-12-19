@@ -1,0 +1,39 @@
+
+classDiagram
+    class TodoItem {
+        -id: str
+        -text: str
+        -completed: bool
+        +__init__(text: str)
+        +get_id() : str
+        +get_text() : str
+        +is_completed() : bool
+        +set_completed(completed: bool) : void
+        +to_dict() : dict
+    }
+
+    class TodoList {
+        -items: list[TodoItem]
+        +__init__()
+        +add_item(text: str) : void
+        +delete_item(id: str) : void
+        +complete_item(id: str) : void
+        +get_item(id: str) : TodoItem | None
+        +get_all_items() : list[TodoItem]
+        +to_dict() : dict
+        +from_dict(data: dict) : void
+    }
+
+    class WebApp {
+        -app: Flask
+        -todo_list: TodoList
+        +__init__()
+        +run() : void
+        +add_task_route() : void
+        +delete_task_route(id: str) : void
+        +complete_task_route(id: str) : void
+        +get_tasks_route() : void
+    }
+
+    WebApp --> TodoList : uses
+    TodoList *-- TodoItem : contains
