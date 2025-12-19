@@ -1,0 +1,46 @@
+
+classDiagram
+    class User {
+        - id: int
+        - username: str
+        - email: str
+        - password_hash: str
+        + __init__(username: str, email: str, password: str)
+        + set_password(password: str)
+        + check_password(password: str) bool
+    }
+    class Resume {
+        - id: int
+        - user_id: int
+        - template_id: int
+        - data: dict
+        - created_at: datetime
+        + __init__(user_id: int, template_id: int, data: dict)
+        + update_data(data: dict)
+        + get_data() dict
+    }
+    class Template {
+        - id: int
+        - name: str
+        - description: str
+        - fields: list
+        - preview_image: str
+        + __init__(name: str, description: str, fields: list, preview_image: str)
+        + get_fields() list
+        + render(data: dict) str
+    }
+    class ResumeForm {
+        + work_experience: TextField
+        + education: TextField
+        + skills: TextField
+        + other_information: TextField
+        + validate() bool
+    }
+    class PDFGenerator {
+        + generate_pdf(resume_data: dict, template: Template) bytes
+    }
+
+    User -- Resume: has
+    Resume -- Template: uses
+    ResumeForm -- Resume: creates
+    PDFGenerator -- Resume: generates from

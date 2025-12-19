@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Preview</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Resume Preview</h1>
+        <div class="card">
+            <div class="card-body">
+                <!-- Display Name and Contact Information -->
+                {% if resume_data.name %}
+                    <h2>{{ resume_data.name }}</h2>
+                {% endif %}
+                {% if resume_data.email %}
+                    <p>Email: {{ resume_data.email }}</p>
+                {% endif %}
+                {% if resume_data.phone %}
+                    <p>Phone: {{ resume_data.phone }}</p>
+                {% endif %}
+
+                <!-- Display Work Experience -->
+                {% if resume_data.work_experience %}
+                    <h3>Work Experience</h3>
+                    {% for work_experience in resume_data.work_experience %}
+                        <div>
+                            {% if work_experience.title %}
+                                <h4>{{ work_experience.title }}</h4>
+                            {% endif %}
+                            {% if work_experience.company %}
+                                <p>Company: {{ work_experience.company }}</p>
+                            {% endif %}
+                            {% if work_experience.location %}
+                                <p>Location: {{ work_experience.location }}</p>
+                            {% endif %}
+                            {% if work_experience.start_date or work_experience.end_date %}
+                                <p>Dates: {{ work_experience.start_date }} - {{ work_experience.end_date }}</p>
+                            {% endif %}
+                            {% if work_experience.description %}
+                                <p>{{ work_experience.description }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <!-- Display Education -->
+                {% if resume_data.education %}
+                    <h3>Education</h3>
+                    {% for education in resume_data.education %}
+                        <div>
+                            {% if education.institution %}
+                                <h4>{{ education.institution }}</h4>
+                            {% endif %}
+                            {% if education.degree %}
+                                <p>Degree: {{ education.degree }}</p>
+                            {% endif %}
+                            {% if education.major %}
+                                <p>Major: {{ education.major }}</p>
+                            {% endif %}
+                            {% if education.graduation_date %}
+                                <p>Graduation Date: {{ education.graduation_date }}</p>
+                            {% endif %}
+                            {% if education.description %}
+                                <p>{{ education.description }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <!-- Display Skills -->
+                {% if resume_data.skills %}
+                    <h3>Skills</h3>
+                    <ul>
+                        {% for skill in resume_data.skills %}
+                            {% if skill.skill %}
+                                <li>{{ skill.skill }}
+                                    {% if skill.level %}
+                                         ({{ skill.level }})
+                                    {% endif %}
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                <!-- Display Other Information -->
+                {% if resume_data.other_information %}
+                    <h3>Other Information</h3>
+                    <p>{{ resume_data.other_information }}</p>
+                {% endif %}
+
+                <a href="{{ url_for('generate_pdf', template_id=template.id) }}" class="btn btn-primary">Download PDF</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

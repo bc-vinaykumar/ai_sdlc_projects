@@ -1,0 +1,34 @@
+
+sequenceDiagram
+    participant U as User
+    participant RF as ResumeForm
+    participant R as Resume
+    participant T as Template
+    participant PG as PDFGenerator
+    participant App as Flask App
+
+    App->>U: User Login/Registration
+    U->>App: Submit Credentials
+    App->>App: Authenticate User
+
+    App->>RF: Display Resume Form
+    RF->>App: User fills form and submits
+    App->>RF: Validate Form Data
+    alt Form Valid
+        App->>R: Create/Update Resume(user_id, template_id, data)
+        R->>R: update_data(data)
+        App->>T: Select Template
+        App->>App: Display Resume Preview
+        App->>PG: Generate PDF(resume.get_data(), template)
+        PG->>PG: generate_pdf(resume_data, template)
+        PG-->>App: PDF File
+        App->>App: Download PDF
+    else Form Invalid
+        App->>RF: Display Error Messages
+    end
+
+    loop User Customizes Template
+        App->>T: Customize Template
+        T->>T: render(data)
+        App->>App: Display Updated Preview
+    end
