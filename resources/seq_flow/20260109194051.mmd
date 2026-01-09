@@ -1,0 +1,33 @@
+
+sequenceDiagram
+    participant M as Main
+    participant G as Game
+    participant S as Snake
+    participant F as Food
+
+    M->>G: __init__(screen_width, screen_height, block_size)
+    G->>S: __init__(x, y, block_size)
+    G->>F: __init__(screen_width, screen_height, block_size)
+    F->>F: generate_food()
+    M->>G: run()
+    loop Game Loop
+        G->>G: handle_input(event)
+        alt event is key press
+            G->>S: change direction
+        end
+        G->>G: update()
+        S->>S: move()
+        G->>G: check_collision()
+        alt collision with wall or self
+            G->>G: game_over = True
+            G->>G: reset()
+        else collision with food
+            S->>S: grow()
+            F->>F: generate_food()
+            G->>G: score += 1
+        end
+        G->>G: draw()
+        G->>S: draw(screen)
+        G->>F: draw(screen)
+        G->>G: display_score()
+    end

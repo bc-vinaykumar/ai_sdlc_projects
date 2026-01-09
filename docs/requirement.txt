@@ -1,0 +1,5 @@
+Project Name: snake_game
+
+i want a visualize snake game
+
+IMPORTANT: You must create a comprehensive README.md file explaining how to run and test the project.

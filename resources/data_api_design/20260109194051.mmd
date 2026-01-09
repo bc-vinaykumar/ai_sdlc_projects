@@ -1,0 +1,51 @@
+
+classDiagram
+    class Game {
+        -snake: Snake
+        -food: Food
+        -screen: Surface
+        -score: int
+        -game_over: bool
+        -clock: Clock
+        -screen_width: int
+        -screen_height: int
+        -block_size: int
+        +__init__(screen_width: int, screen_height: int, block_size: int)
+        +run() -> None
+        +handle_input(event: Event) -> None
+        +update() -> None
+        +draw() -> None
+        +check_collision() -> None
+        +reset() -> None
+        +display_score() -> None
+    }
+    class Snake {
+        -body: list[(int, int)]
+        -direction: tuple[int, int]
+        -color: tuple[int, int, int]
+        -block_size: int
+        +__init__(x: int, y: int, block_size: int)
+        +move() -> None
+        +grow() -> None
+        +draw(screen: Surface) -> None
+        +get_head_position() -> tuple[int, int]
+        +check_self_collision() -> bool
+    }
+    class Food {
+        -position: tuple[int, int]
+        -color: tuple[int, int, int]
+        -block_size: int
+        -screen_width: int
+        -screen_height: int
+        +__init__(screen_width: int, screen_height: int, block_size: int)
+        +generate_food() -> None
+        +draw(screen: Surface) -> None
+        +get_position() -> tuple[int, int]
+    }
+    class Main {
+        +main() -> None
+    }
+
+    Game --> Snake: has
+    Game --> Food: has
+    Main --> Game: uses
