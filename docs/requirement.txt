@@ -1,0 +1,5 @@
+Project Name: snake-game
+
+visulize game with a snake eating the balls
+
+IMPORTANT: You must create a comprehensive README.md file explaining how to run and test the project.

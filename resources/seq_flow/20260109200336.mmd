@@ -1,0 +1,36 @@
+
+sequenceDiagram
+    participant M as Main
+    participant G as Game
+    participant S as Snake
+    participant B as Ball
+    participant Pygame
+
+    M->>G: Game(width, height)
+    G->>S: Snake(start_position, block_size)
+    G->>B: Ball(width, height, block_size)
+    M->>G: run()
+    loop Game Loop
+        G->>Pygame: get events
+        alt event is key press
+            G->>G: handle_input(event)
+            G->>S: change_direction(direction)
+        end
+        G->>G: update()
+        S->>S: move()
+        B->>B: get_position()
+        S->>S: get_head_position()
+        G->>G: check_collision()
+        alt collision with ball
+            S->>S: grow()
+            B->>B: move()
+            G->>G: score += 1
+        else collision with wall or self
+            G->>G: game_over = True
+            G->>G: game_over_screen()
+        end
+        G->>G: draw()
+        G->>S: draw(screen)
+        G->>B: draw(screen)
+        G->>Pygame: update display
+    end

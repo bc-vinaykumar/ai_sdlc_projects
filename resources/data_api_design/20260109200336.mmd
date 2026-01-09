@@ -1,0 +1,45 @@
+
+classDiagram
+    class Game {
+        -snake: Snake
+        -ball: Ball
+        -width: int
+        -height: int
+        -score: int
+        -screen: Surface
+        -game_over: bool
+        +__init__(width: int, height: int)
+        +run() -> None
+        +handle_input(event: Event) -> None
+        +update() -> None
+        +draw() -> None
+        +check_collision() -> None
+        +game_over_screen() -> None
+    }
+    class Snake {
+        -body: list[(int, int)]
+        -direction: (int, int)
+        -color: tuple[int, int, int]
+        -block_size: int
+        +__init__(start_position: (int, int), block_size: int)
+        +move() -> None
+        +grow() -> None
+        +change_direction(direction: (int, int)) -> None
+        +draw(screen: Surface) -> None
+        +check_self_collision() -> bool
+        +get_head_position() -> (int, int)
+    }
+    class Ball {
+        -position: (int, int)
+        -color: tuple[int, int, int]
+        -block_size: int
+        +__init__(width: int, height: int, block_size: int)
+        +draw(screen: Surface) -> None
+        +move() -> None
+        +get_position() -> (int, int)
+    }
+    class main{
+        +main() -> None
+    }
+    Game --> Snake : has
+    Game --> Ball : has
